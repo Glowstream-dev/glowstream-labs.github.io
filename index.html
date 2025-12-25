@@ -42,6 +42,7 @@
       min-height:100vh;
     }
     a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:20px}
 
     /* Header */
     header{
@@ -122,6 +123,7 @@
       gap:22px;
       align-items:stretch;
     }
+
     @media (max-width: 980px){
       .nav{padding:12px 14px}
       .brand{min-width:auto}
@@ -330,28 +332,24 @@
     @media (max-width:980px){
       .wait{grid-template-columns:1fr}
     }
-    form{
-      display:flex; flex-direction:column; gap:10px;
+
+    /* Embedded Google Form wrapper */
+    .embed-card{
       padding:18px;
       border-radius: var(--r2);
       border:1px solid var(--line);
       background: rgba(0,0,0,.20);
+      overflow:hidden;
     }
-    input, textarea{
+    .embed-card iframe{
       width:100%;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      padding:12px 12px;
-      color:var(--text);
-      outline:none;
-      font-size:14px;
-      min-height: 44px;
+      border:0;
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
     }
-    textarea{min-height:96px; resize:vertical}
-    input:focus, textarea:focus{
-      border-color: rgba(108,240,255,.35);
-      box-shadow: 0 0 0 4px rgba(108,240,255,.10);
+    /* Mobile: give it more height */
+    @media (max-width: 520px){
+      .embed-card iframe{height: 760px !important;}
     }
 
     /* Footer */
@@ -384,6 +382,7 @@
     }
     .toast.show{opacity:1; transform: translateY(0)}
 
+    /* Accessibility + reduced motion */
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
       .btn{transition:none}
@@ -600,25 +599,33 @@
   <section id="waitlist">
     <div class="section-title">
       <h2 data-i18n="wait_h">Join the early access waitlist</h2>
-      <p class="sub" data-i18n="wait_sub">Get launch updates, creator onboarding info, and early testing invites.</p>
+      <p class="sub" data-i18n="wait_sub">
+        Get launch updates, creator onboarding info, and early testing invites.
+      </p>
     </div>
 
     <div class="wait">
-      <form id="waitlistForm" novalidate>
-        <input id="name" name="name" autocomplete="name" data-i18n-ph="ph_name" placeholder="Your name" />
-        <input id="email" name="email" autocomplete="email" inputmode="email" data-i18n-ph="ph_email" placeholder="Email" required />
-        <textarea id="note" name="note" data-i18n-ph="ph_note" placeholder="Are you a creator, studio, or supporter? What country/time zone?"></textarea>
+      <!-- LEFT: Embedded Google Form (real submissions, no redirect UX) -->
+      <div class="embed-card" aria-label="Waitlist form">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSeTZgPYdltGBwf6VXwdmgmmmV20JrbR0gZTHNq1SnR0B_qifA/viewform?embedded=true"
+          width="640"
+          height="585"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Glowstream Early Access Waitlist"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          style="height:585px"
+        >Loading…</iframe>
 
-        <div style="display:flex; gap:10px; flex-wrap:wrap">
-          <button class="btn" type="submit" data-i18n="wait_btn">Request invite</button>
-          <button class="btn secondary" type="button" id="copyPitch" data-i18n="wait_copy">Copy 1-line pitch</button>
+        <div class="fine" style="margin-top:10px" data-i18n="wait_fine">
+          No spam. You can remove yourself any time. Your submission goes to our waitlist form.
         </div>
+      </div>
 
-        <div class="fine" data-i18n="wait_fine">
-          No spam. You can remove yourself any time. (This demo stores your submission locally unless you wire it to your backend.)
-        </div>
-      </form>
-
+      <!-- RIGHT: Pitch + links -->
       <div class="door">
         <h3 data-i18n="pitch_h">One-line pitch (shareable)</h3>
         <p class="sub" id="pitchLine" data-i18n="pitch_line">
@@ -631,7 +638,7 @@
         <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
           <a class="btn secondary" href="#how" data-i18n="learn_more">Learn more</a>
           <a class="btn secondary" href="#features" data-i18n="see_features">See features</a>
-          <a class="btn" id="openWaitlistLink" href="#" target="_blank" rel="noopener">Open waitlist form</a>
+          <button class="btn secondary" type="button" id="copyPitch" data-i18n="wait_copy">Copy 1-line pitch</button>
         </div>
 
         <div style="margin-top:12px" class="fine" data-i18n="stripe_note">
@@ -664,9 +671,6 @@
    * - Avoids “adult/explicit/PPV” phrasing on the public landing page.
    * - Uses “18+ experiences (opt-in)” and “separate approved provider + checkout (future)”.
    */
-
-  // ✅ Your live waitlist Google Form:
-  const WAITLIST_URL = "https://forms.gle/Favh5VZCGvzCw2n2A";
 
   const I18N = {
     en: {
@@ -732,12 +736,8 @@
 
       wait_h: "Join the early access waitlist",
       wait_sub: "Get launch updates, creator onboarding info, and early testing invites.",
-      ph_name: "Your name",
-      ph_email: "Email",
-      ph_note: "Are you a creator, studio, or supporter? What country/time zone?",
-      wait_btn: "Request invite",
-      wait_copy: "Copy 1-line pitch",
       wait_fine: "No spam. You can remove yourself any time. Your submission goes to our waitlist form.",
+      wait_copy: "Copy 1-line pitch",
 
       pitch_h: "One-line pitch (shareable)",
       pitch_line: "Glowstream is a creator platform with stores + offer-driven engagement + “Creator Circles,” using compliance-by-design and provider-appropriate checkout for fair payouts.",
@@ -749,9 +749,7 @@
       foot_tag: "Creator Circles • Stores • Offers • Compliance-by-design",
       foot_disclaimer: "Disclaimer: This page is informational and describes product direction. Payment rails vary by content type and provider approvals. Features and availability may change.",
 
-      toast_opening: "Opening waitlist form…",
-      toast_copied: "Copied to clipboard.",
-      toast_bad_email: "Please enter a valid email."
+      toast_copied: "Copied to clipboard."
     },
 
     es: {
@@ -817,12 +815,8 @@
 
       wait_h: "Únete a la lista de acceso anticipado",
       wait_sub: "Recibe novedades, onboarding y invitaciones para pruebas tempranas.",
-      ph_name: "Tu nombre",
-      ph_email: "Email",
-      ph_note: "¿Eres creador, estudio o supporter? ¿País/zona horaria?",
-      wait_btn: "Pedir invitación",
-      wait_copy: "Copiar pitch de 1 línea",
       wait_fine: "Cero spam. Puedes salir cuando quieras. Tu envío va a nuestro formulario de lista de espera.",
+      wait_copy: "Copiar pitch de 1 línea",
 
       pitch_h: "Pitch de 1 línea (para compartir)",
       pitch_line: "Glowstream es una plataforma para creadores con tiendas + engagement por ofertas + “Creator Circles”, con cumplimiento por diseño y checkout según el proveedor para pagos justos.",
@@ -834,9 +828,7 @@
       foot_tag: "Creator Circles • Tiendas • Ofertas • Cumplimiento por diseño",
       foot_disclaimer: "Aviso: esta página es informativa. Los carriles de pago varían según el tipo de contenido y aprobaciones del proveedor. Las funciones pueden cambiar.",
 
-      toast_opening: "Abriendo el formulario…",
-      toast_copied: "Copiado al portapapeles.",
-      toast_bad_email: "Por favor, escribe un email válido."
+      toast_copied: "Copiado al portapapeles."
     },
 
     pt: {
@@ -902,12 +894,8 @@
 
       wait_h: "Entre na lista de acesso antecipado",
       wait_sub: "Receba novidades, onboarding e convites para testes.",
-      ph_name: "Seu nome",
-      ph_email: "Email",
-      ph_note: "Você é criador, estúdio ou apoiador? País/fuso horário?",
-      wait_btn: "Pedir convite",
+      wait_fine: "Sem spam. Você pode sair quando quiser. Seu envio vai para nosso formulário de waitlist.",
       wait_copy: "Copiar pitch",
-      wait_fine: "Sem spam. Você pode sair quando quiser. Seu envio vai para nosso formulário de lista de espera.",
 
       pitch_h: "Pitch (1 linha)",
       pitch_line: "Glowstream é uma plataforma para criadores com lojas + engajamento por ofertas + “Creator Circles”, com conformidade por design e checkout adequado ao provedor para pagamentos justos.",
@@ -919,9 +907,7 @@
       foot_tag: "Creator Circles • Lojas • Ofertas • Conformidade por design",
       foot_disclaimer: "Aviso: esta página descreve direção do produto. Os trilhos variam por tipo de conteúdo e aprovações do provedor. Recursos podem mudar.",
 
-      toast_opening: "Abrindo o formulário…",
-      toast_copied: "Copiado.",
-      toast_bad_email: "Por favor, digite um email válido."
+      toast_copied: "Copiado."
     },
 
     ja: {
@@ -987,12 +973,8 @@
 
       wait_h: "早期アクセスのウェイトリスト",
       wait_sub: "ローンチ情報、導入案内、テスト招待を受け取れます。",
-      ph_name: "お名前",
-      ph_email: "メールアドレス",
-      ph_note: "クリエイター/スタジオ/サポーター？国・タイムゾーンは？",
-      wait_btn: "招待を申請",
+      wait_fine: "スパムなし。いつでも解除可能。送信内容はウェイトリストフォームに保存されます。",
       wait_copy: "1行ピッチをコピー",
-      wait_fine: "スパムなし。いつでも解除可能。送信はウェイトリストフォームに届きます。",
 
       pitch_h: "1行ピッチ（共有用）",
       pitch_line: "Glowstreamは、ストア + オファー駆動の交流 + Creator Circlesを備え、コンプライアンス設計と適切な決済で公平な支払いを実現するクリエイタープラットフォームです。",
@@ -1004,9 +986,7 @@
       foot_tag: "Creator Circles • ストア • オファー • コンプライアンス設計",
       foot_disclaimer: "免責：本ページは製品方向の説明です。決済レールはコンテンツ種別と提供事業者の承認により変わります。機能は変更される可能性があります。",
 
-      toast_opening: "フォームを開いています…",
-      toast_copied: "コピーしました。",
-      toast_bad_email: "有効なメールアドレスを入力してください。"
+      toast_copied: "コピーしました。"
     },
 
     ko: {
@@ -1072,12 +1052,8 @@
 
       wait_h: "얼리 액세스 대기 명단",
       wait_sub: "런칭 업데이트, 온보딩 안내, 테스트 초대를 받으세요.",
-      ph_name: "이름",
-      ph_email: "이메일",
-      ph_note: "크리에이터/스튜디오/서포터? 국가/시간대는?",
-      wait_btn: "초대 요청",
+      wait_fine: "스팸 없음. 언제든 삭제 가능. 제출 내용은 대기명단 폼에 저장됩니다.",
       wait_copy: "1줄 피치 복사",
-      wait_fine: "스팸 없음. 언제든 삭제 가능. 제출 내용은 대기명단 폼으로 전송됩니다.",
 
       pitch_h: "1줄 피치(공유용)",
       pitch_line: "Glowstream는 스토어 + 오퍼 기반 참여 + Creator Circles를 갖춘 크리에이터 플랫폼으로, 컴플라이언스 설계와 제공사 맞춤 체크아웃으로 공정한 정산을 제공합니다.",
@@ -1089,9 +1065,7 @@
       foot_tag: "Creator Circles • 스토어 • 오퍼 • 컴플라이언스 설계",
       foot_disclaimer: "면책: 본 페이지는 제품 방향 설명입니다. 결제 레일은 콘텐츠 유형과 제공사 승인에 따라 달라질 수 있으며 기능은 변경될 수 있습니다.",
 
-      toast_opening: "폼을 여는 중…",
-      toast_copied: "클립보드에 복사했습니다.",
-      toast_bad_email: "유효한 이메일을 입력해 주세요."
+      toast_copied: "클립보드에 복사했습니다."
     },
 
     zh: {
@@ -1157,12 +1131,8 @@
 
       wait_h: "加入早期访问等候名单",
       wait_sub: "获取上线更新、入驻信息与早测邀请。",
-      ph_name: "你的名字",
-      ph_email: "邮箱",
-      ph_note: "你是创作者、工作室还是支持者？国家/时区？",
-      wait_btn: "申请邀请",
+      wait_fine: "不骚扰。随时可退出。你的提交会进入我们的等候名单表单。",
       wait_copy: "复制一句话简介",
-      wait_fine: "不骚扰。随时可退出。提交内容会发送到我们的等候名单表单。",
 
       pitch_h: "一句话简介（可分享）",
       pitch_line: "Glowstream 是一个面向创作者的平台：商店 + 报价驱动互动 + Creator Circles，并用合规设计与适配支付方的结算实现公平分成。",
@@ -1174,9 +1144,7 @@
       foot_tag: "Creator Circles • 商店 • 报价 • 合规设计",
       foot_disclaimer: "声明：本页为产品方向介绍。支付通道会随内容类型与提供方审批而变化，功能与可用性可能调整。",
 
-      toast_opening: "正在打开表单…",
-      toast_copied: "已复制。",
-      toast_bad_email: "请输入有效的邮箱地址。"
+      toast_copied: "已复制。"
     },
 
     ar: {
@@ -1242,12 +1210,8 @@
 
       wait_h: "انضم لقائمة الوصول المبكر",
       wait_sub: "احصل على تحديثات الإطلاق ومعلومات الانضمام ودعوات التجربة.",
-      ph_name: "اسمك",
-      ph_email: "البريد الإلكتروني",
-      ph_note: "هل أنت مبدع، استوديو، أم داعم؟ الدولة/المنطقة الزمنية؟",
-      wait_btn: "اطلب دعوة",
+      wait_fine: "لا رسائل مزعجة. يمكنك الإزالة في أي وقت. سيتم حفظ إرسالِك في نموذج قائمة الانتظار لدينا.",
       wait_copy: "انسخ العرض",
-      wait_fine: "لا رسائل مزعجة. يمكنك الإزالة في أي وقت. يتم إرسال الإرسال إلى نموذج قائمة الانتظار.",
 
       pitch_h: "عرض بجملة واحدة (للمشاركة)",
       pitch_line: "Glowstream منصة للمبدعين مع متاجر + تفاعل قائم على العروض + Creator Circles، وبامتثال بالتصميم وCheckout مناسب للمزوّد لدفعات عادلة.",
@@ -1259,9 +1223,7 @@
       foot_tag: "Creator Circles • المتاجر • العروض • امتثال بالتصميم",
       foot_disclaimer: "تنبيه: هذه الصفحة معلوماتية وتصف اتجاه المنتج. مسارات الدفع تختلف حسب نوع المحتوى وموافقات المزوّد. قد تتغير الميزات.",
 
-      toast_opening: "جارٍ فتح النموذج…",
-      toast_copied: "تم النسخ.",
-      toast_bad_email: "يرجى إدخال بريد إلكتروني صالح."
+      toast_copied: "تم النسخ."
     },
 
     ru: {
@@ -1327,12 +1289,8 @@
 
       wait_h: "Ранний доступ — лист ожидания",
       wait_sub: "Обновления запуска, онбординг и приглашения на тест.",
-      ph_name: "Ваше имя",
-      ph_email: "Email",
-      ph_note: "Вы креатор, студия или поддержка? Страна/часовой пояс?",
-      wait_btn: "Запросить приглашение",
+      wait_fine: "Без спама. Можно удалиться в любой момент. Ваша заявка сохраняется в нашем waitlist-форме.",
       wait_copy: "Скопировать питч",
-      wait_fine: "Без спама. Можно удалиться в любой момент. Отправка идет в нашу waitlist-форму.",
 
       pitch_h: "Питч в одну строку",
       pitch_line: "Glowstream — платформа для креаторов с магазинами + взаимодействием через офферы + “Creator Circles”, с комплаенсом by design и checkout под провайдера для честных выплат.",
@@ -1344,9 +1302,7 @@
       foot_tag: "Creator Circles • Магазины • Офферы • Комплаенс by design",
       foot_disclaimer: "Дисклеймер: страница описывает направление продукта. Платёжные рейлы зависят от типа контента и одобрений провайдера. Функции могут меняться.",
 
-      toast_opening: "Открываю форму…",
-      toast_copied: "Скопировано.",
-      toast_bad_email: "Пожалуйста, введите корректный email."
+      toast_copied: "Скопировано."
     },
 
     uk: {
@@ -1412,12 +1368,8 @@
 
       wait_h: "Приєднайся до раннього доступу",
       wait_sub: "Отримуй оновлення запуску, онбординг та інвайти на тест.",
-      ph_name: "Ваше ім’я",
-      ph_email: "Email",
-      ph_note: "Ти креатор, студія чи сапортер? Країна/часовий пояс?",
-      wait_btn: "Запросити інвайт",
+      wait_fine: "Без спаму. Можна видалити себе будь-коли. Ваша заявка зберігається у нашій формі waitlist.",
       wait_copy: "Скопіювати пітч",
-      wait_fine: "Без спаму. Можна видалити себе будь-коли. Надсилання йде у нашу waitlist-форму.",
 
       pitch_h: "Пітч в один рядок (для поширення)",
       pitch_line: "Glowstream — платформа для креаторів з магазинами + взаємодією через офери + “Creator Circles”, з комплаєнсом by design і checkout під провайдера для справедливих виплат.",
@@ -1429,9 +1381,7 @@
       foot_tag: "Creator Circles • Магазини • Офери • Комплаєнс by design",
       foot_disclaimer: "Дисклеймер: сторінка описує напрям продукту. Платіжні рейли залежать від типу контенту та схвалень провайдера. Функції можуть змінюватися.",
 
-      toast_opening: "Відкриваю форму…",
-      toast_copied: "Скопійовано.",
-      toast_bad_email: "Будь ласка, введіть коректний email."
+      toast_copied: "Скопійовано."
     }
   };
 
@@ -1450,11 +1400,7 @@
       if(dict[key]) el.textContent = dict[key];
     });
 
-    document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
-      const key = el.getAttribute("data-i18n-ph");
-      if(dict[key]) el.setAttribute("placeholder", dict[key]);
-    });
-
+    // Keep pitch line in sync (for copy button)
     const pitch = document.getElementById("pitchLine");
     if(pitch && dict.pitch_line) pitch.textContent = dict.pitch_line;
   }
@@ -1505,34 +1451,6 @@
     const val = langSel.value;
     localStorage.setItem("gs_lang", val);
     applyI18n(val);
-  });
-
-  // Wire the “Open waitlist form” link
-  const openWaitlistLink = document.getElementById("openWaitlistLink");
-  if(openWaitlistLink) openWaitlistLink.href = WAITLIST_URL;
-
-  // Email check
-  function looksLikeEmail(email){
-    return typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  }
-
-  // ✅ Waitlist: open Google Form (no backend needed)
-  const form = document.getElementById("waitlistForm");
-  form.addEventListener("submit", (e)=>{
-    e.preventDefault();
-
-    const lang = langSel.value;
-    const dict = I18N[lang] || I18N.en;
-
-    const email = document.getElementById("email").value.trim();
-    if(!looksLikeEmail(email)){
-      showToast(dict.toast_bad_email || I18N.en.toast_bad_email);
-      document.getElementById("email").focus();
-      return;
-    }
-
-    window.open(WAITLIST_URL, "_blank", "noopener,noreferrer");
-    showToast(dict.toast_opening || I18N.en.toast_opening);
   });
 
   // Copy pitch
