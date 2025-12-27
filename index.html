@@ -5,169 +5,184 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GlowStream Studio</title>
 
-  <meta name="description" content="GlowStream is a creator platform for memberships, digital perks, and community engagement." />
+  <meta name="description" content="GlowStream provides access to a web-based software platform offering creator tools, live interaction features, analytics, and subscription-based digital services." />
 
   <style>
-    body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px;
-      line-height: 1.6;
-      color: #111;
+    :root{
+      --bg:#0b0f19;
+      --card:rgba(255,255,255,0.08);
+      --stroke:rgba(255,255,255,0.14);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.70);
+      --accent:#7c3aed;
+      --accent2:#ec4899;
+      --link:#9bd3ff;
+      --radius:18px;
+      --maxw:980px;
+      --shadow:0 18px 50px rgba(0,0,0,0.35);
     }
-    header { margin-bottom: 32px; }
-    h1 { font-size: 36px; margin-bottom: 8px; }
-    h2 { font-size: 20px; margin-bottom: 10px; }
-    p { margin: 10px 0; }
-    ul { margin-left: 20px; }
-    .card {
-      border: 1px solid #e6e6e6;
-      border-radius: 14px;
-      padding: 20px;
-      margin: 20px 0;
-      background: #fff;
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% -10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 600px at 95% 15%, rgba(236,72,153,.25), transparent 55%),
+        linear-gradient(180deg,#070a12,#0b0f19);
+      padding:32px 18px 60px;
     }
-    .badge {
-      display: inline-block;
-      background: #f4f6ff;
-      border: 1px solid #dfe5ff;
-      color: #243b9a;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      margin-bottom: 10px;
+
+    .wrap{max-width:var(--maxw);margin:0 auto}
+
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:6px 12px;border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      font-size:12px;color:var(--muted);
     }
-    a { color: #0b5fff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #666;
-      text-align: center;
+
+    header{
+      border:1px solid var(--stroke);
+      background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,.03));
+      border-radius:28px;
+      padding:26px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
     }
+
+    h1{font-size:clamp(30px,5vw,46px);margin:0 0 10px}
+    h2{font-size:18px;margin:0 0 10px}
+    p{margin:8px 0;color:var(--muted)}
+
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+    .chip{
+      font-size:12px;padding:7px 12px;border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+    }
+
+    .card{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      border-radius:var(--radius);
+      padding:18px;
+      margin:14px 0;
+    }
+
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+
     .iframe-wrap{
-      border:1px solid #e6e6e6;
-      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:16px;
       overflow:hidden;
+      background:#000;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    iframe{
+      width:100%;
+      height:860px;
+      border:0;
+      display:block;
       background:#fff;
     }
-    .iframe-wrap iframe{
-      width:100%;
-      height:820px; /* increase if your form is cut off */
-      border:0;
+
+    @media(max-width:520px){
+      iframe{height:1100px}
     }
-    @media (max-width: 520px){
-      body{ padding:18px; }
-      h1{ font-size:28px; }
-      .iframe-wrap iframe{ height:980px; } /* mobile often needs more height */
+
+    footer{
+      margin-top:28px;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.12);
+      text-align:center;
+      font-size:13px;
+      color:rgba(255,255,255,.55);
     }
   </style>
 </head>
 
 <body>
+<div class="wrap">
 
-<header>
   <span class="badge">Public Information Page</span>
-  <h1>GlowStream Studio</h1>
-  <p>
-    GlowStream is a creator platform for <strong>memberships</strong>, <strong>digital perks</strong>,
-    and <strong>community engagement</strong>. It enables creators to connect with audiences
-    through subscriptions and optional platform features.
-  </p>
-</header>
 
-<section class="card">
-  <h2>What we offer</h2>
-  <ul>
-    <li><strong>Creator memberships</strong> (recurring subscription support)</li>
-    <li><strong>Optional boosts & tips</strong> (one-time support)</li>
-    <li><strong>Digital credits</strong> used for platform features</li>
-  </ul>
-  <p>
-    GlowStream is being developed in phases and some features may be available
-    through limited access while we roll out updates.
-  </p>
-</section>
+  <header>
+    <h1>GlowStream Studio</h1>
+    <p>
+      We provide access to a web-based software platform offering creator tools,
+      live interaction features, analytics, and subscription-based digital services.
+      Customers pay for platform access, software features, and digital memberships.
+      No physical goods are sold.
+    </p>
 
-<section class="card">
-  <h2>Refunds & cancellations</h2>
-  <p>
-    <strong>Subscriptions:</strong> You may cancel at any time to stop future renewals.
-  </p>
-  <p>
-    <strong>One-time purchases:</strong> If a purchase does not function as intended,
-    contact support within <strong>7 days</strong> and we will review the request.
-  </p>
-  <p>
-    Refunds are handled fairly and case-by-case to prevent abuse.
-  </p>
-</section>
+    <div class="chips">
+      <span class="chip">Memberships</span>
+      <span class="chip">Boosts</span>
+      <span class="chip">Digital Credits</span>
+      <span class="chip">Creator Tools</span>
+      <span class="chip">Live Interaction</span>
+    </div>
+  </header>
 
-<section class="card" id="waitlist">
-  <h2>Join the waitlist</h2>
-  <p>Sign up to receive early access updates and rollout announcements.</p>
+  <section class="card">
+    <h2>Refunds & cancellations</h2>
+    <p><strong>Subscriptions:</strong> Cancel anytime to stop future renewals.</p>
+    <p><strong>One-time purchases:</strong> Contact support within 7 days if something doesn’t work as intended.</p>
+  </section>
 
-  <!-- IMPORTANT: Replace the src below with your actual Google Form EMBED URL
-       It should look like:
-       https://docs.google.com/forms/d/e/XXXXXXXX/viewform?embedded=true
-  -->
-  <div class="iframe-wrap">
-    <iframe
-      src="PASTE_YOUR_GOOGLE_FORM_EMBED_URL_HERE"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="GlowStream Waitlist Form">
-      Loading…
-    </iframe>
-  </div>
+  <section class="card" id="waitlist">
+    <h2>Join the waitlist</h2>
+    <p>Sign up for early access updates and rollout announcements.</p>
 
-  <p style="font-size:14px;color:#666;margin-top:10px;">
-    Prefer email? Contact
+    <div class="iframe-wrap">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSeTZgPYdltGBwf6VXwdmgmmmV20JrbR0gZTHNq1SnR0B_qifA/viewform?embedded=true"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="GlowStream Waitlist">
+        Loading…
+      </iframe>
+    </div>
+
+    <p style="font-size:13px;margin-top:10px">
+      Prefer email? <a href="mailto:support@glowstream.studio">support@glowstream.studio</a>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Payments & access</h2>
+    <p>
+      Payments are completed inside the GlowStream application after account signup.
+      This page provides general information and early access updates.
+    </p>
+    <p style="font-size:13px">
+      Payment processing is handled by Stripe for compliant use cases.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Policies</h2>
+    <p>
+      <a href="./terms.html">Terms of Service</a> ·
+      <a href="./privacy.html">Privacy Policy</a>
+    </p>
+  </section>
+
+  <footer>
+    © <span id="year"></span> GlowStream Studio ·
     <a href="mailto:support@glowstream.studio">support@glowstream.studio</a>
-  </p>
-</section>
+  </footer>
 
-<section class="card" id="payments-note">
-  <h2>Payments & access</h2>
-  <p>
-    Payments are completed inside the GlowStream application after account signup.
-    This page provides general information and early access updates.
-  </p>
-  <p style="font-size:14px;color:#666;">
-    Payment processing is handled by Stripe for compliant use cases.
-  </p>
-</section>
-
-<section class="card">
-  <h2>Support</h2>
-  <p>
-    Email:
-    <a href="mailto:support@glowstream.studio">support@glowstream.studio</a><br />
-    Typical response time: 24–48 hours.
-  </p>
-</section>
-
-<section class="card">
-  <h2>Policies</h2>
-  <p>
-    <a href="./terms.html">Terms of Service</a> ·
-    <a href="./privacy.html">Privacy Policy</a>
-  </p>
-  <p>
-    We do not sell personal data. Information is used only to operate
-    and improve the platform.
-  </p>
-</section>
-
-<footer>
-  <p>© <span id="year"></span> GlowStream Studio. All rights reserved.</p>
-</footer>
+</div>
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
-
 </body>
 </html>
-
