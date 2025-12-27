@@ -16,23 +16,11 @@
       line-height: 1.6;
       color: #111;
     }
-    header {
-      margin-bottom: 32px;
-    }
-    h1 {
-      font-size: 36px;
-      margin-bottom: 8px;
-    }
-    h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    p {
-      margin: 10px 0;
-    }
-    ul {
-      margin-left: 20px;
-    }
+    header { margin-bottom: 32px; }
+    h1 { font-size: 36px; margin-bottom: 8px; }
+    h2 { font-size: 20px; margin-bottom: 10px; }
+    p { margin: 10px 0; }
+    ul { margin-left: 20px; }
     .card {
       border: 1px solid #e6e6e6;
       border-radius: 14px;
@@ -50,18 +38,29 @@
       font-size: 12px;
       margin-bottom: 10px;
     }
-    a {
-      color: #0b5fff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
     footer {
       margin-top: 40px;
       font-size: 14px;
       color: #666;
       text-align: center;
+    }
+    .iframe-wrap{
+      border:1px solid #e6e6e6;
+      border-radius:14px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .iframe-wrap iframe{
+      width:100%;
+      height:820px; /* increase if your form is cut off */
+      border:0;
+    }
+    @media (max-width: 520px){
+      body{ padding:18px; }
+      h1{ font-size:28px; }
+      .iframe-wrap iframe{ height:980px; } /* mobile often needs more height */
     }
   </style>
 </head>
@@ -107,18 +106,18 @@
 
 <section class="card" id="waitlist">
   <h2>Join the waitlist</h2>
-  <p>
-    Sign up to receive early access updates and rollout announcements.
-  </p>
+  <p>Sign up to receive early access updates and rollout announcements.</p>
 
-  <div style="border:1px solid #e6e6e6;border-radius:14px;overflow:hidden;">
+  <!-- IMPORTANT: Replace the src below with your actual Google Form EMBED URL
+       It should look like:
+       https://docs.google.com/forms/d/e/XXXXXXXX/viewform?embedded=true
+  -->
+  <div class="iframe-wrap">
     <iframe
       src="PASTE_YOUR_GOOGLE_FORM_EMBED_URL_HERE"
-      width="100%"
-      height="700"
-      frameborder="0"
-      marginheight="0"
-      marginwidth="0">
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="GlowStream Waitlist Form">
       Loading…
     </iframe>
   </div>
@@ -132,9 +131,8 @@
 <section class="card" id="payments-note">
   <h2>Payments & access</h2>
   <p>
-    This website does not process payments.
-    Payments and paid features are enabled only inside the GlowStream application
-    after eligibility checks and account verification.
+    Payments are completed inside the GlowStream application after account signup.
+    This page provides general information and early access updates.
   </p>
   <p style="font-size:14px;color:#666;">
     Payment processing is handled by Stripe for compliant use cases.
@@ -172,3 +170,4 @@
 
 </body>
 </html>
+
