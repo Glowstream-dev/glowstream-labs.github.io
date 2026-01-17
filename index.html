@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GlowStream Studio</title>
 
-  <meta name="description" content="GlowStream provides access to a web-based software platform offering creator tools, live interaction features, analytics, and subscription-based digital services." />
+  <meta name="description" content="GlowStream Studio builds creator-first livestreaming tools and community features. Join the waitlist for early access updates." />
+
+  <!-- Gumroad overlay -->
+  <script src="https://gumroad.com/js/gumroad.js"></script>
 
   <style>
     :root{
@@ -115,25 +118,46 @@
   <header>
     <h1>GlowStream Studio</h1>
     <p>
-      We provide access to a web-based software platform offering creator tools,
-      live interaction features, analytics, and subscription-based digital services.
-      Customers pay for platform access, software features, and digital memberships.
-      No physical goods are sold.
+      Creator-first tools for livestreaming and online communities.
+      Join the waitlist for updates — or support development with Early Access.
     </p>
 
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px">
+      <a
+        class="gumroad-button"
+        href="https://glowstream.gumroad.com/l/qazvz"
+        data-gumroad-overlay="true"
+        style="
+          display:inline-block;
+          padding:14px 22px;
+          background:var(--accent);
+          color:#ffffff;
+          font-size:16px;
+          font-weight:700;
+          border-radius:14px;
+          text-decoration:none;
+          border:1px solid rgba(255,255,255,.18);
+        "
+      >
+        Get Early Access
+      </a>
+
+      <a href="#waitlist" style="font-weight:600">
+        Join the waitlist →
+      </a>
+    </div>
+
     <div class="chips">
-      <span class="chip">Memberships</span>
-      <span class="chip">Boosts</span>
-      <span class="chip">Digital Credits</span>
       <span class="chip">Creator Tools</span>
       <span class="chip">Live Interaction</span>
+      <span class="chip">Community</span>
+      <span class="chip">Membership Access</span>
     </div>
   </header>
 
   <section class="card">
     <h2>Refunds & cancellations</h2>
-    <p><strong>Subscriptions:</strong> Cancel anytime to stop future renewals.</p>
-    <p><strong>One-time purchases:</strong> Contact support within 7 days if something doesn’t work as intended.</p>
+    <p><strong>Access purchases:</strong> Contact support within 7 days if something doesn’t work as intended.</p>
   </section>
 
   <section class="card" id="waitlist">
@@ -156,13 +180,12 @@
   </section>
 
   <section class="card">
-    <h2>Payments & access</h2>
+    <h2>Access</h2>
     <p>
-      Payments are completed inside the GlowStream application after account signup.
-      This page provides general information and early access updates.
+      GlowStream is in active development. Early Access supporters receive updates and access details as features roll out.
     </p>
     <p style="font-size:13px">
-      Payment processing is handled by Stripe for compliant use cases.
+      Early Access is a supporter purchase for access and updates — not an investment or financial product.
     </p>
   </section>
 
@@ -184,5 +207,8 @@
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
+</body>
+</html>
+
 </body>
 </html>
